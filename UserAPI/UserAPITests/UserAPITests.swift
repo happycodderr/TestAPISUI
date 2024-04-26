@@ -1,9 +1,3 @@
-//
-//  UserAPITests.swift
-//  UserAPITests
-//
-//  Created by Geethanjali on 26/04/2024.
-//
 
 import XCTest
 @testable import UserAPI

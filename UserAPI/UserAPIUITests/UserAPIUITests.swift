@@ -1,9 +1,3 @@
-//
-//  UserAPIUITests.swift
-//  UserAPIUITests
-//
-//  Created by Geethanjali on 26/04/2024.
-//
 
 import XCTest
 

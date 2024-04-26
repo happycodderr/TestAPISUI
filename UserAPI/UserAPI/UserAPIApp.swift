@@ -1,9 +1,3 @@
-//
-//  UserAPIApp.swift
-//  UserAPI
-//
-//  Created by Geethanjali on 26/04/2024.
-//
 
 import SwiftUI
 
@@ -11,7 +5,7 @@ import SwiftUI
 struct UserAPIApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            UserListView()
         }
     }
 }
