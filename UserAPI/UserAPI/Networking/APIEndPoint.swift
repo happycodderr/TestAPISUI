@@ -2,5 +2,5 @@
 import Foundation
 
 struct APIEndPoint {
-    static let UsersEndPoint = "https://jsonplaceholder.typicode.com/users"
+    static let usersEndPoint = "https://jsonplaceholder.typicode.com/users"
 }
