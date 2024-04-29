@@ -10,25 +10,33 @@ import SwiftUI
 struct UserListView: View {
     @ObservedObject var viewModel = UserListViewModel()
     var body: some View {
-        VStack {
-            List(viewModel.users) { user in
-                VStack{
-                    HStack {
-                        Text("UserName:")
-                        Text(user.name)
-                        Spacer()
+        
+        NavigationView {
+            VStack {
+                List {
+                    ForEach(viewModel.users, id: \.self) { user in
+                        NavigationLink(destination: UserDetailsView(user: user)) {
+                            VStack {
+                                HStack {
+                                    Text("UserName:")
+                                    Text(user.name)
+                                    Spacer()
+                                }
+                                
+                                HStack {
+                                    Text("Email:")
+                                    Text(user.email)
+                                    Spacer()
+                                }
+                            }
+                        }
                     }
-                    
-                    HStack {
-                        Text("Email:")
-                        Text(user.email)
-                        Spacer()
-                    }
+                    .navigationTitle("Available Users")
                 }
             }
-        } 
-        .task {
-            await viewModel.getUsers()
+            .task {
+                await viewModel.getUsers()
+        }
         }
     }
 }

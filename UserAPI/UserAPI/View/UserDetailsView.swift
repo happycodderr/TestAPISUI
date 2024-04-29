@@ -8,11 +8,45 @@
 import SwiftUI
 
 struct UserDetailsView: View {
+    let user: User
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            Spacer().frame(height: 30)
+            Text("User Details")
+                .font(.largeTitle)
+                .fontWeight(.bold)
+            Spacer().frame(height: 50)
+            HStack {
+                Text("User Name: ")
+                Text(user.name)
+                Spacer()
+            }
+            
+            HStack {
+                Text("Email: ")
+                Text(user.email)
+                Spacer()
+            }
+            
+            HStack {
+                Text("Phone: ")
+                Text(user.phone)
+                Spacer()
+            }
+            
+            HStack {
+                Text("Website: ")
+                Text(user.website)
+                Spacer()
+            }
+            
+            Spacer()
+        }
+        .padding(.horizontal, 50)
     }
 }
 
 #Preview {
-    UserDetailsView()
+    UserDetailsView(user: User.user)
 }

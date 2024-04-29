@@ -24,7 +24,7 @@
 } */
 import Foundation
 
-struct User: Codable, Identifiable {
+struct User: Codable, Identifiable, Hashable {
     let id: Int
     let name, username, email: String
     let address: Address
@@ -33,15 +33,19 @@ struct User: Codable, Identifiable {
     
 }
 
-struct Address: Codable {
+struct Address: Codable, Hashable {
     let street, suite, city, zipcode: String
     let geo: Geo
 }
 
-struct Geo: Codable {
+struct Geo: Codable, Hashable {
     let lat, lng: String
 }
 
-struct Company: Codable {
+struct Company: Codable, Hashable {
     let name, catchPhrase, bs: String
+}
+
+extension User {
+    static let user = User(id: 1, name: "XYZ", username: "xyzuser", email: "xyz@gmail.com", address: Address(street: "Test Street", suite: "123", city: "Test", zipcode: "AB10 0CV", geo: Geo(lat: "10.0", lng: "10.0")), phone: "01234567890", website: "xyz@website.com", company: Company(name: "XYZCompany", catchPhrase: "You got the best", bs: "XX"))
 }
