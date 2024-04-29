@@ -1,30 +1,7 @@
 
-/*
- "id": 1,
- "name": "Leanne Graham",
- "username": "Bret",
- "email": "Sincere@april.biz",
- "address": {
-   "street": "Kulas Light",
-   "suite": "Apt. 556",
-   "city": "Gwenborough",
-   "zipcode": "92998-3874",
-   "geo": {
-     "lat": "-37.3159",
-     "lng": "81.1496"
-   }
- },
- "phone": "1-770-736-8031 x56442",
- "website": "hildegard.org",
- "company": {
-   "name": "Romaguera-Crona",
-   "catchPhrase": "Multi-layered client-server neural-net",
-   "bs": "harness real-time e-markets"
- }
-} */
 import Foundation
 
-struct User: Codable, Identifiable, Hashable {
+struct User: Decodable, Identifiable, Hashable {
     let id: Int
     let name, username, email: String
     let address: Address
@@ -33,16 +10,16 @@ struct User: Codable, Identifiable, Hashable {
     
 }
 
-struct Address: Codable, Hashable {
+struct Address: Decodable, Hashable {
     let street, suite, city, zipcode: String
     let geo: Geo
 }
 
-struct Geo: Codable, Hashable {
+struct Geo: Decodable, Hashable {
     let lat, lng: String
 }
 
-struct Company: Codable, Hashable {
+struct Company: Decodable, Hashable {
     let name, catchPhrase, bs: String
 }
 

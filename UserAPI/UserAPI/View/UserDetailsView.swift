@@ -1,9 +1,3 @@
-//
-//  UserDetailsView.swift
-//  UserAPI
-//
-//  Created by Geethanjali on 26/04/2024.
-//
 
 import SwiftUI
 
@@ -11,39 +5,44 @@ struct UserDetailsView: View {
     let user: User
     
     var body: some View {
-        VStack {
-            Spacer().frame(height: 30)
-            Text("User Details")
-                .font(.largeTitle)
+        
+        ScrollView {
+            Text("User Details View")
+                .font(.title)
                 .fontWeight(.bold)
-            Spacer().frame(height: 50)
-            HStack {
-                Text("User Name: ")
-                Text(user.name)
+            Divider()
+            Spacer().frame(height: 30)
+            VStack(alignment: .leading, spacing: 10) {
+                Text("User Name: \(user.name)")
+                Text("Email: \(user.email)")
+                Text("Phone: \(user.phone)")
+                addressView
+                companyView
                 Spacer()
             }
-            
-            HStack {
-                Text("Email: ")
-                Text(user.email)
-                Spacer()
-            }
-            
-            HStack {
-                Text("Phone: ")
-                Text(user.phone)
-                Spacer()
-            }
-            
-            HStack {
-                Text("Website: ")
-                Text(user.website)
-                Spacer()
-            }
-            
-            Spacer()
         }
-        .padding(.horizontal, 50)
+        .padding(.top, 50)
+    }
+    
+    var addressView: some View {
+        VStack {
+            HStack {
+                Text("Address: \(user.address.suite),")
+                Text("\(user.address.street),")
+                Text("\(user.address.city)")
+                Text("\(user.address.zipcode)")
+            }
+        }
+    }
+    
+    var companyView: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack{
+                Text("Company: \(user.company.name)")
+                Text("\(user.company.catchPhrase)")
+            }
+            Text("Website: \(user.website)")
+        }
     }
 }
 
