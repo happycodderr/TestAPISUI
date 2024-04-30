@@ -4,6 +4,8 @@ import SwiftUI
 struct UserListView: View {
     @ObservedObject var viewModel = UserListViewModel()
     @State var isAlertPresented = false
+    @State private var searchText = ""
+    
     var body: some View {
         
         NavigationStack {
@@ -40,6 +42,21 @@ struct UserListView: View {
                     Text("Email: \(user.email)")
                 }
             }
+        }
+        .searchable(text: $searchText) {
+            ForEach(viewModel.users) { user in
+                Text(user.name)
+            }
+        }
+        .onChange(of: searchText) {
+            oldValue, newValue in
+            filterUsers(newValue)
+        }
+    }
+    
+    private func filterUsers(_ searchText: String) {
+        viewModel.filteredUsers = viewModel.users.filter { user in
+            user.name.caseInsensitiveCompare(searchText) == .orderedSame
         }
     }
     

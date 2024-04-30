@@ -13,6 +13,7 @@ class UserListViewModel: ObservableObject {
     @Published var users: [User] = []
     @Published var viewState: ViewState = .isLoading
     @Published var networkError: NetworkErrors?
+    @Published var filteredUsers: [User] = []
     private var manager: Networkable
 
     init(manager: Networkable = NetworkManager()) {
