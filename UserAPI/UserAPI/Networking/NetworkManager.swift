@@ -2,26 +2,27 @@
 import Foundation
 
 protocol Networkable {
-    func get(urlString: String) async throws -> [User]
+    func getDataFromAPI<T>(urlString: String, type: T.Type) async throws -> T where T: Decodable
 }
 
-class NetworkManager: Networkable {
-    var cache = [URL: [User]]()
+final class NetworkManager: Networkable {
     
-    func get(urlString: String) async throws -> [User] {
+    func getDataFromAPI<T>(urlString: String, type: T.Type) async throws -> T where T: Decodable {
+       // var cache = [URL: [type]]
         guard let url = URL(string: urlString) else {
             throw NetworkErrors.invalidURL
         }
-        if let cachedData = cache[url] {
-                   return cachedData
-               }
+//        if let cachedData = cache[url] {
+//            print("Cached Data : \(cachedData)")
+//                   return cachedData
+//               }
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
-            let users = try JSONDecoder().decode([User].self, from: data)
-            cache[url] = users
-            return users
+            let decodedData = try JSONDecoder().decode(type.self, from: data)
+          //  cache[url] = users
+            return decodedData
         } catch {
-            throw NetworkErrors.invalidData
+            throw error
         }
     }
 }

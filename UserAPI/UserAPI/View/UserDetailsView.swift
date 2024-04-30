@@ -13,7 +13,7 @@ struct UserDetailsView: View {
             Divider()
             Spacer().frame(height: 30)
             VStack(alignment: .leading, spacing: 10) {
-                Text("User Name: \(user.name)")
+                Text("Name: \(user.name)")
                 Text("Email: \(user.email)")
                 Text("Phone: \(user.phone)")
                 addressView
@@ -29,7 +29,7 @@ struct UserDetailsView: View {
             HStack {
                 Text("Address: \(user.address.suite),")
                 Text("\(user.address.street),")
-                Text("\(user.address.city)")
+                Text("\(user.address.city),")
                 Text("\(user.address.zipcode)")
             }
         }

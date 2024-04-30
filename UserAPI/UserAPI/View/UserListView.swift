@@ -19,7 +19,7 @@ struct UserListView: View {
                     showErrorAlert()
                 }
             }
-            .navigationTitle("Available Users")
+            .navigationTitle("Users List")
             .navigationBarTitleDisplayMode(.inline)
             .task {
                 await viewModel.getUsers()
@@ -35,28 +35,18 @@ struct UserListView: View {
     
     @ViewBuilder
     func loadUserList() -> some View {
-        List(viewModel.users) { user in
+        List(viewModel.filteredUsers) { user in
             NavigationLink(destination: UserDetailsView(user: user)) {
                 VStack(alignment: .leading) {
-                    Text("UserName: \(user.name)")
+                    Text("Name: \(user.name)")
                     Text("Email: \(user.email)")
                 }
             }
         }
-        .searchable(text: $searchText) {
-            ForEach(viewModel.users) { user in
-                Text(user.name)
-            }
-        }
+        .searchable(text: $searchText)
         .onChange(of: searchText) {
             oldValue, newValue in
-            filterUsers(newValue)
-        }
-    }
-    
-    private func filterUsers(_ searchText: String) {
-        viewModel.filteredUsers = viewModel.users.filter { user in
-            user.name.caseInsensitiveCompare(searchText) == .orderedSame
+            viewModel.filterUsers(newValue)
         }
     }
     

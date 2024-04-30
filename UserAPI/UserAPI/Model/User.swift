@@ -7,7 +7,6 @@ struct User: Decodable, Identifiable, Hashable {
     let address: Address
     let phone, website: String
     let company: Company
-    
 }
 
 struct Address: Decodable, Hashable {
@@ -24,5 +23,5 @@ struct Company: Decodable, Hashable {
 }
 
 extension User {
-    static let user: [User] = [ User(id: 1, name: "XYZ", username: "xyzuser", email: "xyz@gmail.com", address: Address(street: "Test Street", suite: "123", city: "Test", zipcode: "AB10 0CV", geo: Geo(lat: "10.0", lng: "10.0")), phone: "01234567890", website: "xyz@website.com", company: Company(name: "XYZCompany", catchPhrase: "You got the best", bs: "XX"))]
+    static let user: [User] = [User(id: 1, name: "XYZ", username: "xyzuser", email: "xyz@gmail.com", address: Address(street: "Test Street", suite: "123", city: "Test", zipcode: "AB10 0CV", geo: Geo(lat: "10.0", lng: "10.0")), phone: "01234567890", website: "xyz@website.com", company: Company(name: "XYZCompany", catchPhrase: "You got the best", bs: "XX"))]
 }
