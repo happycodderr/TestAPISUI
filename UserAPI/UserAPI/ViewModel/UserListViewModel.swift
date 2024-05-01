@@ -13,7 +13,7 @@ final class UserListViewModel: ObservableObject {
     @Published var filteredUsers: [User] = []
     private var manager: Networkable
     private var users: [User] = []
-
+    
     init(manager: Networkable = NetworkManager()) {
         self.manager = manager
     }
@@ -22,7 +22,9 @@ final class UserListViewModel: ObservableObject {
     func getUsers() async {
         do {
             viewState = .isLoading
+            
             users = try await manager.getDataFromAPI(urlString: APIEndPoint.usersEndPoint, type: [User].self)
+            saveData(data: users)
             filteredUsers = users
             viewState = .loaded
         } catch {
@@ -47,5 +49,26 @@ final class UserListViewModel: ObservableObject {
             }
             self.filteredUsers = list.sorted(by: { $0.name < $1.name })
         }
+    }
+    
+    func saveData(data: [User]) {
+        let fileManager = FileManager.default
+        let documentsURL = fileManager.urls(for: .cachesDirectory, in: .userDomainMask).first
+        let fileURL = (documentsURL?.appendingPathComponent("users.json"))!
+        if let encodedData = try? JSONEncoder().encode(users) {
+            try? encodedData.write(to: fileURL)
+        }
+    }
+    
+    func loadDataFromFile() -> [User]? {
+        let fileManager = FileManager.default
+        let documentsURL = fileManager.urls(for: .cachesDirectory, in: .userDomainMask).first
+        let fileURL = (documentsURL?.appendingPathComponent("users.json"))!
+        if let data = try? Data(contentsOf: fileURL){
+            if let users = try? JSONDecoder().decode([User].self, from: data) {
+                return users
+            }
+        }
+        return nil
     }
 }

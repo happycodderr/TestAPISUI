@@ -1,7 +1,7 @@
 
 import Foundation
 
-struct User: Decodable, Identifiable, Hashable {
+struct User: Codable, Identifiable, Hashable {
     let id: Int
     let name, username, email: String
     let address: Address
@@ -9,16 +9,16 @@ struct User: Decodable, Identifiable, Hashable {
     let company: Company
 }
 
-struct Address: Decodable, Hashable {
+struct Address: Codable, Hashable {
     let street, suite, city, zipcode: String
     let geo: Geo
 }
 
-struct Geo: Decodable, Hashable {
+struct Geo: Codable, Hashable {
     let lat, lng: String
 }
 
-struct Company: Decodable, Hashable {
+struct Company: Codable, Hashable {
     let name, catchPhrase, bs: String
 }
 
