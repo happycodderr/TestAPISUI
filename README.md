@@ -23,7 +23,7 @@ File Manager
 Async await.
 
 # Testing
-Units tests for success and failure situations.Mocked responses using MockNetworking, MockingPlanetRepository, MockRestAPIManager
+Units tests for success and failure situations.Mocked responses using MockNetworking, MockRestAPIManager
 
 # Screenshots
 
