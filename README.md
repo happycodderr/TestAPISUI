@@ -17,7 +17,6 @@ SwiftUI
 This application uses MVVM for the views and clean architecture for the URL calls.
 
 # Offline Storage
-File Manager
 
 # Design Patterns
 Async await.
