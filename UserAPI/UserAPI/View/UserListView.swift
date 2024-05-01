@@ -22,14 +22,18 @@ struct UserListView: View {
             .navigationTitle("Users List")
             .navigationBarTitleDisplayMode(.inline)
             .task {
-                await viewModel.getUsers()
-                if viewModel.networkError != nil {
-                    isAlertPresented = true
-                }
+                await makeAPICall()
             }
             .refreshable {
-                await viewModel.getUsers()
+                await makeAPICall()
             }
+        }
+    }
+    
+    func makeAPICall() async {
+        await viewModel.getUsers(urlString: APIEndPoint.usersEndPoint)
+        if viewModel.networkError != nil {
+            isAlertPresented = true
         }
     }
     

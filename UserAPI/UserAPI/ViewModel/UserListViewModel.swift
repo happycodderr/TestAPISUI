@@ -19,12 +19,12 @@ final class UserListViewModel: ObservableObject {
     }
     
     @MainActor
-    func getUsers() async {
+    func getUsers(urlString: String) async {
         do {
             viewState = .isLoading
             
-            users = try await manager.getDataFromAPI(urlString: APIEndPoint.usersEndPoint, type: [User].self)
-            saveData(data: users)
+            users = try await manager.getDataFromAPI(urlString: urlString,
+                                                     type: [User].self)
             filteredUsers = users
             viewState = .loaded
         } catch {
@@ -35,7 +35,7 @@ final class UserListViewModel: ObservableObject {
             case .invalidData:
                 networkError = .invalidData
             case nil:
-                networkError = .invalidData
+                break
             }
             viewState = .error
         }
@@ -49,26 +49,5 @@ final class UserListViewModel: ObservableObject {
             }
             self.filteredUsers = list.sorted(by: { $0.name < $1.name })
         }
-    }
-    
-    func saveData(data: [User]) {
-        let fileManager = FileManager.default
-        let documentsURL = fileManager.urls(for: .cachesDirectory, in: .userDomainMask).first
-        let fileURL = (documentsURL?.appendingPathComponent("users.json"))!
-        if let encodedData = try? JSONEncoder().encode(users) {
-            try? encodedData.write(to: fileURL)
-        }
-    }
-    
-    func loadDataFromFile() -> [User]? {
-        let fileManager = FileManager.default
-        let documentsURL = fileManager.urls(for: .cachesDirectory, in: .userDomainMask).first
-        let fileURL = (documentsURL?.appendingPathComponent("users.json"))!
-        if let data = try? Data(contentsOf: fileURL){
-            if let users = try? JSONDecoder().decode([User].self, from: data) {
-                return users
-            }
-        }
-        return nil
     }
 }
