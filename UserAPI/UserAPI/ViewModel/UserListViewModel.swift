@@ -19,25 +19,32 @@ final class UserListViewModel: ObservableObject {
     }
     
     @MainActor
-    func getUsers() async {
+    func getUsers(urlString: String) async {
         do {
             viewState = .isLoading
-            
-            users = try await manager.getDataFromAPI(urlString: APIEndPoint.usersEndPoint, type: [User].self)
+            users = try await manager.getDataFromAPI(urlString: urlString, type: [User].self)
             saveData(data: users)
             filteredUsers = users
+            print("from api")
             viewState = .loaded
         } catch {
-            print(error)
-            switch networkError {
-            case .invalidURL:
-                networkError = .invalidURL
-            case .invalidData:
-                networkError = .invalidData
-            case nil:
-                networkError = .invalidData
+            if let offlineStoredData = loadDataFromFile() {
+//                filteredUsers = offlineStoredData
+//                users = offlineStoredData
+                print("from offline")
+                viewState = .loaded
+            } else {
+                print(error)
+                switch networkError {
+                case .invalidURL:
+                    networkError = .invalidURL
+                case .invalidData:
+                    networkError = .invalidData
+                case nil:
+                    networkError = .invalidData
+                }
+                viewState = .error
             }
-            viewState = .error
         }
     }
     func filterUsers(_ searchText: String) {
@@ -64,7 +71,7 @@ final class UserListViewModel: ObservableObject {
         let fileManager = FileManager.default
         let documentsURL = fileManager.urls(for: .cachesDirectory, in: .userDomainMask).first
         let fileURL = (documentsURL?.appendingPathComponent("users.json"))!
-        if let data = try? Data(contentsOf: fileURL){
+        if let data = try? Data(contentsOf: fileURL) {
             if let users = try? JSONDecoder().decode([User].self, from: data) {
                 return users
             }
