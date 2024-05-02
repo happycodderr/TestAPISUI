@@ -49,7 +49,7 @@ struct UserListView: View {
         }
         .searchable(text: $searchText)
         .onChange(of: searchText) {
-            oldValue, newValue in
+            newValue in
             viewModel.filterUsers(newValue)
         }
     }

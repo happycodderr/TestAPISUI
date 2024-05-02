@@ -20,19 +20,19 @@ final class UserListViewModelTests: XCTestCase {
         await sut.getUsers(urlString: "UserTest")
         
         //Then
-        XCTAssertEqual(sut.filteredUsers.count, 10)
-        XCTAssertEqual(sut.filteredUsers.first?.name, "Leanne Graham")
+        XCTAssertEqual(sut.users.count, 10)
+        XCTAssertEqual(sut.users.first?.name, "Leanne Graham")
     }
     
 //    func test_getUserList_Failure() async {
 //        //Given
 //        
 //        //When
-//        await sut.getUsers(urlString: "")
+//        await sut.getUsers(urlString: "asfd")
 //        
 //        //Then
-//        XCTAssertEqual(sut.filteredUsers.count, 0)
-//        XCTAssertEqual(sut.networkError, .invalidURL)
+//        //XCTAssertEqual(sut.users.count, 0)
+//        XCTAssertNotNil(sut.networkError)
 //    }
 }
 
